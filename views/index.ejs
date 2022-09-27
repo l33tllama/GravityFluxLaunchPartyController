@@ -14,6 +14,10 @@
                 <h1>Gravity Flux</h1>
                 <h2>Party Control Panel</h2>
             </div>
+            <a href="<%= discord_url %>" class="url_link">Join the Discord server!</a>&nbsp;|
+            <a href="https://store.steampowered.com/app/2072520/Gravity_Flux/" class="url_link">Wishlist Gravity Flux on Steam!</a>&nbsp;|
+            <a href="<%= jitsi_url %>" class="url_link">Jitsi Meet URL</a>&nbsp;|
+            <a href="https://motleypixels.com" class="url_link">MotleyPixels.com</a>
             <div id="jitsi_container">
                 <iframe id="jitsi_meeting" allow="camera; microphone; fullscreen; display-capture; autoplay" src="<%= jitsi_url %>">
                 </iframe>
@@ -26,7 +30,6 @@
     <script>
         let win_w = 0;
         let win_h = 0;
-
         function xmlHttpReq(path, key, value){
             var xhttp = new XMLHttpRequest();
             let url = path + "?" + key + "=" + value;

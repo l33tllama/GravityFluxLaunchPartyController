@@ -6,6 +6,7 @@ const fs = require('fs');
 
 const settings_json = fs.readFileSync('settings.json');
 let jitsi_url = JSON.parse(settings_json)["jitsi_url"];
+let discord_url = JSON.parse(settings_json)["discord_url"];
 //console.log(jitsi_url)
 
 app.use("/css/", express.static('css'));
@@ -16,7 +17,8 @@ let lcd_text = "";
 
 app.get('/', function (req, res) {
     res.render("index" , {
-        jitsi_url : jitsi_url
+        jitsi_url : jitsi_url,
+        discord_url: discord_url
     });
    //res.sendFile(__dirname + "/index.html");
 });
