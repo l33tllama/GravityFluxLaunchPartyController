@@ -16,14 +16,48 @@
             </div>
             <a href="<%= discord_url %>" class="url_link">Join the Discord server!</a>&nbsp;|
             <a href="https://store.steampowered.com/app/2072520/Gravity_Flux/" class="url_link">Wishlist Gravity Flux on Steam!</a>&nbsp;|
-            <a href="<%= jitsi_url %>" class="url_link">Jitsi Meet URL</a>&nbsp;|
+            <a href="<%= owncast_site_url %>" class="url_link">Owncast Site</a>&nbsp;|
             <a href="https://motleypixels.com" class="url_link">MotleyPixels.com</a>
+            <!-- Not using Jitsi because I can't hide the viere's video..
             <div id="jitsi_container">
                 <iframe id="jitsi_meeting" allow="camera; microphone; fullscreen; display-capture; autoplay" src="<%= jitsi_url %>">
                 </iframe>
             </div>
+            -->
+            <!-- Twitch requires HTTPS server.. too lazy 
+            <div id="twitch_container">
+                <iframe
+                    id="twitch_stream"
+                    src="<%= twitch_url %>&parent=localhost"
+                    height="100%"
+                    width="100%"
+                    allowfullscreen autoplay>
+                </iframe>
+            </div>
+        -->
+            <!-- Owncast with HTTPS server -->
+            <div id="owncast_container">
+                <iframe
+                id="owncast_stream"
+                src="<%= owncast_url %>"
+                title="Owncast"
+                referrerpolicy="origin"
+                scrolling="no"
+                allowfullscreen>
+                </iframe>
+                <iframe
+                id="owncast_chat"
+                src="<%= owncast_chat %>"
+                title="Owncast Chat"
+                referrerpolicy="origin"
+                scrolling="yes"
+                allowfullscreen>
+                </iframe>
+            </div>
+            
             <div id="controls">
-                <span>Set LCD text</span>&nbsp;<input type="text" id="lcd_text"></input><button id="set_text">Set Text</button>
+                <p>You can control an LED Matrix display below:</p>
+                <span>Set LED Matrix text</span>&nbsp;<input type="text" id="lcd_text"></input>&nbsp;<button id="set_text">Set Text</button>
             </div>
         </div>
     </body>
