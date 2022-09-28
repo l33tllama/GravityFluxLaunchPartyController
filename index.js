@@ -15,6 +15,8 @@ let owncast_site_url = JSON.parse(settings_json)["owncast_site_url"];
 
 app.use("/css/", express.static('css'));
 app.use("/js/", express.static('js'));
+app.use("/img/", express.static('img'));
+app.use("/fonts/", express.static('fonts'));
 app.set('view engine', 'ejs');
 
 let lcd_text = "";

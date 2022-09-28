@@ -7,12 +7,14 @@
         <title>Gravity Flux  - Controller</title>
         <link rel="stylesheet" href="css/bootstrap.css">
         <link rel="stylesheet" href="css/main.css">
+        <link rel="stylesheet" href="css/fonts.css">
     </head>
     <body>
         <div class="container" id="main">
             <div id="headings">
-                <h1>Gravity Flux</h1>
-                <h2>Party Control Panel</h2>
+                <img src="img/small_capsule.png"/>
+                
+                <h2>Launch Party Control Panel</h2>
             </div>
             <a href="<%= discord_url %>" class="url_link">Join the Discord server!</a>&nbsp;|
             <a href="https://store.steampowered.com/app/2072520/Gravity_Flux/" class="url_link">Wishlist Gravity Flux on Steam!</a>&nbsp;|
@@ -57,20 +59,30 @@
             
             <div id="controls">
                 <p>You can control an LED Matrix display below:</p>
-                <span>Set LED Matrix text</span>&nbsp;<input type="text" id="lcd_text"></input>&nbsp;<button id="set_text">Set Text</button>
+                <span>Set LED Matrix text</span>&nbsp;<input type="text" id="lcd_text"></input>&nbsp;<button id="set_text">Set Text</button>&nbsp;<span id="sent_msg"></span>
             </div>
+            <img src="img/robot_blue_jump.png" id="player"/>
         </div>
     </body>
     <script>
         let win_w = 0;
         let win_h = 0;
+        var player_y = 0;
+        
         function xmlHttpReq(path, key, value){
             var xhttp = new XMLHttpRequest();
             let url = path + "?" + key + "=" + value;
             xhttp.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 200) {
                 // Typical action to be performed when the document is ready:
+                    let resp = xhttp.responseText;
                     console.log(xhttp.responseText)
+                    if(resp.indexOf("OK") != -1){
+                        document.getElementById("sent_msg").innerHTML = "Sent!";
+                        setTimeout(function(){
+                            document.getElementById("sent_msg").innerHTML = "";
+                        }, 2000);
+                    }
                 }
             };
             xhttp.open("POST", url, true);
@@ -87,10 +99,64 @@
             win_h = window.innerWidth;
             win_h = window.innerHeight;
             document.getElementById("main").style.height = (win_h * (2/3)) + "px";
+            document.body.style.backgroundSize = "100% " + win_h + "px";
         }
+        var gravity = 10;
+        var dt = 0;
+        var last_timestamp = 0;
+        var timestamp_actual = 0;
+        var timestamp_accum = 0;
+        var ts = 0;
+        var t = 0;
+        var wait_time = 5;
+        var wait_time_count = 0;
+        var paused = false;
+        var was_paused = false;
         window.onload = function(){
             resizeVideo()
             console.log('Hello');
+            var velocity = -15;
+            function step(timestamp){
+                dt = timestamp - last_timestamp;
+                if(!paused){
+                    
+                    t += 1;
+                    if(player_y > 0){
+                        t = 0;
+                        player_y = -1;
+                        if(!was_paused){
+                            paused = true;
+                        }
+                        //velocity = -velocity;
+                    }
+                    if(timestamp_accum > 0){
+                        ts = timestamp_accum - t;
+                        // if(timestamp < 0){
+                        //     timestamp = 0;
+                        // }
+                    }
+                    if(was_paused){
+                        was_paused = false;
+                    }
+                    var ts = t / 10;
+                    player_y = player_y + (velocity * ts) + (0.5) * gravity * ts * ts;
+                    document.getElementById("player").style.transform = "translate(-200px, " + player_y + "px) scaleX(-0.5) scaleY(0.5)";
+                    
+                    //console.log(player_y + " " + ts)
+                    
+                } else {
+                    wait_time_count += dt;
+                    if(wait_time_count / 1000 > wait_time){
+                        paused = false;
+                        was_paused = true;
+                        wait_time_count = 0;
+                    }
+                }
+                window.requestAnimationFrame(step);
+                last_timestamp = timestamp;
+                
+            }
+            window.requestAnimationFrame(step);
         }
         window.onresize = function(){
             resizeVideo()

@@ -2,6 +2,11 @@ body{
     min-height: 100%;
     display:flex;
     flex-direction:column;
+    font-family: 'Xolonium';
+    background: rgb(223,249,255);
+    background: linear-gradient(0deg, rgba(223,249,255,1) 0%, rgba(170,238,255,1) 47%, rgba(170,238,255,1) 100%); 
+    background-repeat:no-repeat;
+    /* background-size: 100% */
 }
 * {
     box-sizing: border-box;
@@ -10,6 +15,7 @@ body{
     
 }
 #headings{
+    padding: 10px;
     text-align: center;
 }
 #controls{
@@ -41,6 +47,12 @@ body{
 }
 .url_link{
     font-size: 9pt;
+}
+#player{
+    top: 75%;
+    transform: scaleX(-1);
+    position: absolute;
+    z-index: -10;;
 }
 @media (min-width: 800px) {
     #jitsi_container, #twitch_container, #owncast_container{
